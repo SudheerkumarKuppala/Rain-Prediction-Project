@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SafeRouteX AI - Road Safety Prediction</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
+    <div class="container">
+        <a class="navbar-brand d-flex align-items-center gap-2" href="#">
+            <i class="fa-solid fa-shield-halved nav-icon"></i>
+            <span>SafeRouteX <span class="text-accent">AI</span></span>
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item"><a class="nav-link" href="#overview">Overview</a></li>
+                <li class="nav-item"><a class="nav-link" href="#predict">Predict</a></li>
+                <li class="nav-item"><a class="nav-link" href="#hotspots">Hotspots</a></li>
+                <li class="nav-item"><a class="nav-link" href="#performance">Performance</a></li>
+                <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Hero Section -->
+<section id="hero" class="hero-section d-flex align-items-center">
+    <div class="hero-overlay"></div>
+    <div class="hero-particles" id="particles"></div>
+    <div class="container position-relative">
+        <div class="row justify-content-center text-center">
+            <div class="col-lg-9">
+                <div class="hero-badge mb-4">
+                    <i class="fa-solid fa-bolt me-2"></i>AI-Powered Road Safety
+                </div>
+                <h1 class="hero-title mb-4">
+                    Safe<span class="text-gradient">Route</span>X AI
+                </h1>
+                <p class="hero-subtitle mb-5">
+                    Predicting Safer Journeys with Machine Learning
+                </p>
+                <div class="d-flex gap-3 justify-content-center flex-wrap">
+                    <a href="#predict" class="btn btn-hero btn-primary-hero">
+                        <i class="fa-solid fa-chart-line me-2"></i>Predict Now
+                    </a>
+                    <a href="#overview" class="btn btn-hero btn-outline-hero">
+                        <i class="fa-solid fa-circle-info me-2"></i>Learn More
+                    </a>
+                </div>
+                <div class="hero-stats row mt-5 g-3">
+                    <div class="col-6 col-md-3">
+                        <div class="stat-card">
+                            <div class="stat-num" data-target="87.88">0</div>
+                            <div class="stat-label">Accuracy %</div>
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <div class="stat-card">
+                            <div class="stat-num" data-target="1100000">0</div>
+                            <div class="stat-label">Records</div>
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <div class="stat-card">
+                            <div class="stat-num" data-target="24">0</div>
+                            <div class="stat-label">Features</div>
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <div class="stat-card">
+                            <div class="stat-num" data-target="4">0</div>
+                            <div class="stat-label">Severity Levels</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="hero-scroll-indicator">
+        <i class="fa-solid fa-chevron-down"></i>
+    </div>
+</section>
+
+<!-- Project Overview Section -->
+<section id="overview" class="section-padding">
+    <div class="container">
+        <div class="section-header text-center mb-5">
+            <span class="section-tag">Project Overview</span>
+            <h2 class="section-title">About SafeRouteX AI</h2>
+            <p class="section-desc">Leveraging big data and machine learning to make roads safer</p>
+        </div>
+        <div class="row g-4 mb-5">
+            <div class="col-md-4">
+                <div class="overview-card">
+                    <div class="overview-icon"><i class="fa-solid fa-database"></i></div>
+                    <h5>Dataset</h5>
+                    <p>US Accidents Dataset with 1.1+ Million records from 2016-2023</p>
+                    <div class="overview-tag">Kaggle US Accidents</div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="overview-card">
+                    <div class="overview-icon"><i class="fa-solid fa-brain"></i></div>
+                    <h5>Algorithms</h5>
+                    <p>XGBoost for severity classification + DBSCAN for hotspot detection</p>
+                    <div class="overview-tag">XGBoost + DBSCAN</div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="overview-card">
+                    <div class="overview-icon"><i class="fa-solid fa-bullseye"></i></div>
+                    <h5>Accuracy</h5>
+                    <p>87.88% classification accuracy across 4 severity levels</p>
+                    <div class="overview-tag">87.88% Accuracy</div>
+                </div>
+            </div>
+        </div>
+        <!-- Workflow Diagram -->
+        <div class="workflow-diagram">
+            <div class="section-header text-center mb-4">
+                <h4 class="text-white">Project Workflow</h4>
+            </div>
+            <div class="workflow-steps">
+                <div class="workflow-step"><i class="fa-solid fa-table me-2"></i>Dataset</div>
+                <div class="workflow-arrow"><i class="fa-solid fa-arrow-right"></i></div>
+                <div class="workflow-step"><i class="fa-solid fa-broom me-2"></i>Preprocessing</div>
+                <div class="workflow-arrow"><i class="fa-solid fa-arrow-right"></i></div>
+                <div class="workflow-step"><i class="fa-solid fa-magnifying-glass-chart me-2"></i>EDA</div>
+                <div class="workflow-arrow"><i class="fa-solid fa-arrow-right"></i></div>
+                <div class="workflow-step"><i class="fa-solid fa-gears me-2"></i>Feature Eng.</div>
+                <div class="workflow-arrow"><i class="fa-solid fa-arrow-right"></i></div>
+                <div class="workflow-step"><i class="fa-brands fa-python me-2"></i>XGBoost</div>
+                <div class="workflow-arrow"><i class="fa-solid fa-arrow-right"></i></div>
+                <div class="workflow-step"><i class="fa-solid fa-circle-nodes me-2"></i>DBSCAN</div>
+                <div class="workflow-arrow"><i class="fa-solid fa-arrow-right"></i></div>
+                <div class="workflow-step active"><i class="fa-solid fa-robot me-2"></i>Prediction</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Prediction Section -->
+<section id="predict" class="section-padding section-dark">
+    <div class="container">
+        <div class="section-header text-center mb-5">
+            <span class="section-tag">ML Prediction</span>
+            <h2 class="section-title">Predict Accident Severity</h2>
+            <p class="section-desc">Enter road and weather conditions to get an AI-powered risk assessment</p>
+        </div>
+        <div class="row g-4">
+            <div class="col-lg-8">
+                <form id="predictionForm">
+                    <!-- Location -->
+                    <div class="form-card mb-4">
+                        <div class="form-card-header">
+                            <i class="fa-solid fa-location-dot me-2 text-accent"></i>Location Details
+                        </div>
+                        <div class="form-card-body">
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label class="form-label">Start Latitude <span class="required">*</span></label>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="fa-solid fa-map-pin"></i></span>
+                                        <input type="number" class="form-control" id="Start_Lat" name="Start_Lat" step="any" placeholder="e.g. 39.865147" value="39.865147" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Start Longitude <span class="required">*</span></label>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="fa-solid fa-map-pin"></i></span>
+                                        <input type="number" class="form-control" id="Start_Lng" name="Start_Lng" step="any" placeholder="e.g. -84.058723" value="-84.058723" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">End Latitude</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="fa-solid fa-flag-checkered"></i></span>
+                                        <input type="number" class="form-control" id="End_Lat" name="End_Lat" step="any" placeholder="e.g. 0 (if unknown)" value="0">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">End Longitude</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="fa-solid fa-flag-checkered"></i></span>
+                                        <input type="number" class="form-control" id="End_Lng" name="End_Lng" step="any" placeholder="e.g. 0 (if unknown)" value="0">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label">Distance (mi) <span class="required">*</span></label>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="fa-solid fa-road"></i></span>
+                                        <input type="number" class="form-control" id="Distance_mi" name="Distance_mi" step="any" min="0" placeholder="e.g. 0.01" value="0.01" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label">State <span class="required">*</span></label>
+                                    <select class="form-select" id="State" name="State">
+                                        {% for state, code in states.items() %}
+                                        <option value="{{ state }}" {% if state == 'OH' %}selected{% endif %}>{{ state }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label">Timezone</label>
+                                    <select class="form-select" id="Timezone" name="Timezone">
+                                        {% for tz, code in timezones.items() %}
+                                        <option value="{{ tz }}" {% if tz == 'US/Eastern' %}selected{% endif %}>{{ tz }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">City Code <i class="fa-solid fa-circle-info text-muted ms-1" title="Encoded city ID from dataset (0-9000+). Default: 221 = Dayton, OH"></i></label>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="fa-solid fa-city"></i></span>
+                                        <input type="number" class="form-control" id="City" name="City" min="0" placeholder="e.g. 221" value="221">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">County Code <i class="fa-solid fa-circle-info text-muted ms-1" title="Encoded county ID (0-3000+). Default: 59 = Montgomery, OH"></i></label>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="fa-solid fa-map"></i></span>
+                                        <input type="number" class="form-control" id="County" name="County" min="0" placeholder="e.g. 59" value="59">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Weather -->
+                    <div class="form-card mb-4">
+                        <div class="form-card-header">
+                            <i class="fa-solid fa-cloud-sun me-2 text-accent"></i>Weather Conditions
+                        </div>
+                        <div class="form-card-body">
+                            <div class="row g-3">
+                                <div class="col-md-4">
+                                    <label class="form-label">Temperature (°F) <span class="required">*</span></label>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="fa-solid fa-temperature-half"></i></span>
+                                        <input type="number" class="form-control" id="Temperature_F" name="Temperature_F" step="any" placeholder="e.g. 65" value="36.9" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label">Wind Chill (°F)</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="fa-solid fa-wind"></i></span>
+                                        <input type="number" class="form-control" id="Wind_Chill_F" name="Wind_Chill_F" step="any" placeholder="e.g. 60" value="43.1">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label">Humidity (%) <span class="required">*</span></label>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="fa-solid fa-droplet"></i></span>
+                                        <input type="number" class="form-control" id="Humidity_pct" name="Humidity_pct" step="any" min="0" max="100" placeholder="e.g. 60" value="91">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label">Pressure (in) <span class="required">*</span></label>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="fa-solid fa-gauge"></i></span>
+                                        <input type="number" class="form-control" id="Pressure_in" name="Pressure_in" step="any" placeholder="e.g. 29.97" value="29.68">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label">Visibility (mi) <span class="required">*</span></label>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="fa-solid fa-eye"></i></span>
+                                        <input type="number" class="form-control" id="Visibility_mi" name="Visibility_mi" step="any" min="0" placeholder="e.g. 10" value="10">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label">Wind Speed (mph)</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="fa-solid fa-arrows-left-right"></i></span>
+                                        <input type="number" class="form-control" id="Wind_Speed_mph" name="Wind_Speed_mph" step="any" min="0" placeholder="e.g. 8" value="6.9">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label">Precipitation (in)</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="fa-solid fa-cloud-rain"></i></span>
+                                        <input type="number" class="form-control" id="Precipitation_in" name="Precipitation_in" step="any" min="0" placeholder="e.g. 0.02" value="0.02">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label">Wind Direction</label>
+                                    <select class="form-select" id="Wind_Direction" name="Wind_Direction">
+                                        {% for wd, code in wind_directions.items() %}
+                                        <option value="{{ wd }}" {% if wd == 'N' %}selected{% endif %}>{{ wd }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label">Weather Condition</label>
+                                    <select class="form-select" id="Weather_Condition" name="Weather_Condition">
+                                        {% for wc, code in weather_conditions.items() %}
+                                        <option value="{{ wc }}" {% if wc == 'Light Freezing Rain' %}selected{% endif %}>{{ wc }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Date & Time -->
+                    <div class="form-card mb-4">
+                        <div class="form-card-header">
+                            <i class="fa-solid fa-clock me-2 text-accent"></i>Date & Time
+                        </div>
+                        <div class="form-card-body">
+                            <div class="row g-3">
+                                <div class="col-md-4">
+                                    <label class="form-label">Year <span class="required">*</span></label>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="fa-solid fa-calendar"></i></span>
+                                        <input type="number" class="form-control" id="Year" name="Year" min="2016" max="2030" placeholder="e.g. 2024" value="2016" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label">Month <span class="required">*</span></label>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="fa-solid fa-calendar-days"></i></span>
+                                        <input type="number" class="form-control" id="Month" name="Month" min="1" max="12" placeholder="1-12" value="2" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label">Day <span class="required">*</span></label>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="fa-solid fa-calendar-day"></i></span>
+                                        <input type="number" class="form-control" id="Day" name="Day" min="1" max="31" placeholder="1-31" value="8" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Hour (24h) <span class="required">*</span></label>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="fa-solid fa-hourglass-half"></i></span>
+                                        <input type="number" class="form-control" id="Hour" name="Hour" min="0" max="23" placeholder="0-23" value="5" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Weekday <span class="required">*</span></label>
+                                    <select class="form-select" id="Weekday" name="Weekday">
+                                        <option value="0" selected>Monday (0)</option>
+                                        <option value="1">Tuesday (1)</option>
+                                        <option value="2">Wednesday (2)</option>
+                                        <option value="3">Thursday (3)</option>
+                                        <option value="4">Friday (4)</option>
+                                        <option value="5">Saturday (5)</option>
+                                        <option value="6">Sunday (6)</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="d-flex gap-3">
+                        <button type="submit" class="btn btn-predict flex-fill" id="predictBtn">
+                            <span class="btn-text"><i class="fa-solid fa-robot me-2"></i>Predict Severity</span>
+                            <span class="btn-spinner d-none">
+                                <span class="spinner-border spinner-border-sm me-2" role="status"></span>Analyzing...
+                            </span>
+                        </button>
+                        <button type="button" class="btn btn-reset" onclick="resetForm()">
+                            <i class="fa-solid fa-rotate-left"></i>
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Result Panel -->
+            <div class="col-lg-4">
+                <div class="result-panel" id="resultPanel">
+                    <div class="result-placeholder" id="resultPlaceholder">
+                        <div class="placeholder-icon">
+                            <i class="fa-solid fa-shield-halved"></i>
+                        </div>
+                        <h5>Ready to Predict</h5>
+                        <p>Fill in the form and click "Predict Severity" to get an AI-powered road safety assessment.</p>
+                    </div>
+                    <div class="result-content d-none" id="resultContent">
+                        <div class="result-header">
+                            <div class="result-icon" id="resultIcon"></div>
+                            <div class="result-title" id="resultTitle"></div>
+                            <div class="result-severity" id="resultSeverity"></div>
+                        </div>
+                        <div class="risk-meter-container">
+                            <div class="risk-meter-label">Risk Level</div>
+                            <div class="risk-meter-track">
+                                <div class="risk-meter-fill" id="riskMeterFill"></div>
+                            </div>
+                            <div class="risk-meter-labels">
+                                <span>Safe</span><span>Moderate</span><span>High</span><span>Danger</span>
+                            </div>
+                        </div>
+                        <div class="result-message" id="resultMessage"></div>
+                        <div class="result-recommendation" id="resultRecommendation"></div>
+                        <div class="result-timestamp text-muted small mt-3" id="resultTimestamp"></div>
+                        <button class="btn btn-download mt-3 w-100" onclick="downloadReport()">
+                            <i class="fa-solid fa-file-pdf me-2"></i>Download Report
+                        </button>
+                    </div>
+                </div>
+
+                <!-- How to Use -->
+                <div class="how-to-use mt-4">
+                    <h6 class="mb-3"><i class="fa-solid fa-circle-question me-2 text-accent"></i>How to Use</h6>
+                    <div class="step-item">
+                        <div class="step-check"><i class="fa-solid fa-check"></i></div>
+                        <span>Enter location coordinates and state</span>
+                    </div>
+                    <div class="step-item">
+                        <div class="step-check"><i class="fa-solid fa-check"></i></div>
+                        <span>Fill in weather and atmospheric data</span>
+                    </div>
+                    <div class="step-item">
+                        <div class="step-check"><i class="fa-solid fa-check"></i></div>
+                        <span>Select date and time of travel</span>
+                    </div>
+                    <div class="step-item">
+                        <div class="step-check"><i class="fa-solid fa-check"></i></div>
+                        <span>View predicted risk and recommendations</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Prediction History -->
+        <div class="mt-5" id="historySection">
+            <div class="section-header mb-4">
+                <h4 class="text-white"><i class="fa-solid fa-history me-2 text-accent"></i>Recent Predictions</h4>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-history">
+                    <thead>
+                        <tr>
+                            <th>Date & Time</th>
+                            <th>Location (Lat, Lng)</th>
+                            <th>Severity</th>
+                            <th>Risk Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="historyTableBody">
+                        <tr>
+                            <td colspan="4" class="text-center text-muted py-4">No predictions yet. Make your first prediction above.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Hotspot Map Section -->
+<section id="hotspots" class="section-padding">
+    <div class="container">
+        <div class="section-header text-center mb-5">
+            <span class="section-tag">DBSCAN Clustering</span>
+            <h2 class="section-title">Accident Hotspot Visualization</h2>
+            <p class="section-desc">Interactive visualization of accident-prone regions identified using DBSCAN clustering</p>
+        </div>
+        <div class="map-legend mb-3 d-flex gap-4 justify-content-center flex-wrap">
+            <div class="legend-item"><span class="legend-dot red"></span> High Accident Zone</div>
+            <div class="legend-item"><span class="legend-dot orange"></span> Moderate Accident Zone</div>
+            <div class="legend-item"><span class="legend-dot green"></span> Low Risk Zone</div>
+        </div>
+        <div id="accidentMap" class="accident-map"></div>
+    </div>
+</section>
+
+<!-- Model Performance Section -->
+<section id="performance" class="section-padding section-dark">
+    <div class="container">
+        <div class="section-header text-center mb-5">
+            <span class="section-tag">Evaluation Metrics</span>
+            <h2 class="section-title">Model Performance Dashboard</h2>
+            <p class="section-desc">XGBoost classifier performance on the US Accidents dataset</p>
+        </div>
+        <div class="row g-4 mb-5">
+            <div class="col-md-3 col-6">
+                <div class="metric-card">
+                    <div class="metric-icon"><i class="fa-solid fa-bullseye"></i></div>
+                    <div class="metric-label">Accuracy</div>
+                    <div class="metric-value" data-value="87.88">0%</div>
+                    <div class="metric-bar-track">
+                        <div class="metric-bar-fill" data-width="87.88"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 col-6">
+                <div class="metric-card">
+                    <div class="metric-icon"><i class="fa-solid fa-crosshairs"></i></div>
+                    <div class="metric-label">Precision</div>
+                    <div class="metric-value" data-value="88">0%</div>
+                    <div class="metric-bar-track">
+                        <div class="metric-bar-fill" data-width="88"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 col-6">
+                <div class="metric-card">
+                    <div class="metric-icon"><i class="fa-solid fa-chart-simple"></i></div>
+                    <div class="metric-label">Recall</div>
+                    <div class="metric-value" data-value="87">0%</div>
+                    <div class="metric-bar-track">
+                        <div class="metric-bar-fill" data-width="87"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 col-6">
+                <div class="metric-card">
+                    <div class="metric-icon"><i class="fa-solid fa-star"></i></div>
+                    <div class="metric-label">F1-Score</div>
+                    <div class="metric-value" data-value="87">0%</div>
+                    <div class="metric-bar-track">
+                        <div class="metric-bar-fill" data-width="87"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="info-stat-card">
+                    <i class="fa-solid fa-database text-accent"></i>
+                    <div class="info-stat-value">1.1M+</div>
+                    <div class="info-stat-label">Dataset Records</div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="info-stat-card">
+                    <i class="fa-brands fa-python text-accent"></i>
+                    <div class="info-stat-value">XGBoost + DBSCAN</div>
+                    <div class="info-stat-label">Algorithm Used</div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="info-stat-card">
+                    <i class="fa-solid fa-list-check text-accent"></i>
+                    <div class="info-stat-value">24</div>
+                    <div class="info-stat-label">Features Used</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section id="features" class="section-padding">
+    <div class="container">
+        <div class="section-header text-center mb-5">
+            <span class="section-tag">Capabilities</span>
+            <h2 class="section-title">Key Features</h2>
+        </div>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="feature-card">
+                    <i class="fa-solid fa-broom feature-icon"></i>
+                    <h5>Missing Value Handling</h5>
+                    <p>Robust pipeline handles missing weather and location data</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="feature-card">
+                    <i class="fa-solid fa-magnifying-glass-chart feature-icon"></i>
+                    <h5>Exploratory Data Analysis</h5>
+                    <p>In-depth statistical analysis of 1.1M+ accident records</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="feature-card">
+                    <i class="fa-solid fa-filter feature-icon"></i>
+                    <h5>Outlier Detection</h5>
+                    <p>IQR-based outlier removal for cleaner model training</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="feature-card">
+                    <i class="fa-solid fa-gears feature-icon"></i>
+                    <h5>Feature Engineering</h5>
+                    <p>Time extraction, label encoding, and 24-feature selection</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="feature-card">
+                    <i class="fa-solid fa-brain feature-icon"></i>
+                    <h5>XGBoost Classification</h5>
+                    <p>Gradient boosting with 87.88% accuracy on 4 severity levels</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="feature-card">
+                    <i class="fa-solid fa-circle-nodes feature-icon"></i>
+                    <h5>DBSCAN Hotspot Detection</h5>
+                    <p>Density-based clustering identifies accident-prone regions</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Feature Importance Section -->
+        <div class="feature-importance mt-5">
+            <div class="section-header text-center mb-4">
+                <h4 class="text-white">Important Features for Prediction</h4>
+            </div>
+            <div class="row g-3">
+                <div class="col-md-4">
+                    <div class="importance-card">
+                        <div class="importance-rank">1</div>
+                        <i class="fa-solid fa-temperature-half"></i>
+                        <h6>Temperature</h6>
+                        <p>Ambient temperature significantly influences road friction and driver behavior</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="importance-card">
+                        <div class="importance-rank">2</div>
+                        <i class="fa-solid fa-droplet"></i>
+                        <h6>Humidity</h6>
+                        <p>High humidity leads to fog and reduced visibility conditions</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="importance-card">
+                        <div class="importance-rank">3</div>
+                        <i class="fa-solid fa-eye"></i>
+                        <h6>Visibility</h6>
+                        <p>Low visibility is a primary factor in multi-vehicle collisions</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="importance-card">
+                        <div class="importance-rank">4</div>
+                        <i class="fa-solid fa-wind"></i>
+                        <h6>Wind Speed</h6>
+                        <p>High winds affect vehicle stability especially trucks and SUVs</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="importance-card">
+                        <div class="importance-rank">5</div>
+                        <i class="fa-solid fa-location-dot"></i>
+                        <h6>Location (Lat/Lng)</h6>
+                        <p>Geographic coordinates capture road infrastructure patterns</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="importance-card">
+                        <div class="importance-rank">6</div>
+                        <i class="fa-solid fa-clock"></i>
+                        <h6>Time of Day</h6>
+                        <p>Rush hours and nighttime driving correlate with higher severity</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- About Section -->
+<section id="about" class="section-padding section-dark">
+    <div class="container">
+        <div class="section-header text-center mb-5">
+            <span class="section-tag">About the Project</span>
+            <h2 class="section-title">SafeRouteX AI</h2>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-lg-8 text-center">
+                <div class="about-shield-container mb-4">
+                    <div class="about-shield-circle">
+                        <i class="fa-solid fa-shield-halved about-shield-icon"></i>
+                    </div>
+                </div>
+                <p class="about-desc">
+                    This project predicts accident severity using <strong>XGBoost</strong> and identifies
+                    accident-prone areas using <strong>DBSCAN clustering</strong>. The system helps travelers
+                    understand accident risks based on weather, location, and temporal factors, providing
+                    actionable safety recommendations.
+                </p>
+                <div class="tech-badges mt-4">
+                    <span class="tech-badge">Python</span>
+                    <span class="tech-badge">Flask</span>
+                    <span class="tech-badge">XGBoost</span>
+                    <span class="tech-badge">DBSCAN</span>
+                    <span class="tech-badge">Scikit-Learn</span>
+                    <span class="tech-badge">Pandas</span>
+                    <span class="tech-badge">NumPy</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- How to Use Section -->
+<section class="section-padding" id="how-to-use-section">
+    <div class="container">
+        <div class="text-center mb-5">
+            <span class="section-badge"><i class="fa-solid fa-book-open me-2"></i>Guide</span>
+            <h2 class="section-title mt-3">How to Use <span class="text-accent">SafeRouteX AI</span></h2>
+            <p class="section-subtitle">Follow these simple steps to predict accident severity and get personalised travel recommendations.</p>
+        </div>
+
+        <div class="row g-4 justify-content-center">
+
+            <!-- Step 1 -->
+            <div class="col-lg-3 col-md-6">
+                <div class="htu-card" data-aos="fade-up" data-delay="0">
+                    <div class="htu-step-num">01</div>
+                    <div class="htu-tick-wrap">
+                        <i class="fa-solid fa-check htu-tick"></i>
+                    </div>
+                    <h5 class="htu-title">Enter Location Details</h5>
+                    <p class="htu-desc">Provide the start latitude, longitude, and the US state where you plan to travel.</p>
+                    <div class="htu-icon-row">
+                        <i class="fa-solid fa-location-dot"></i>
+                        <i class="fa-solid fa-map"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 2 -->
+            <div class="col-lg-3 col-md-6">
+                <div class="htu-card" data-aos="fade-up" data-delay="100">
+                    <div class="htu-step-num">02</div>
+                    <div class="htu-tick-wrap">
+                        <i class="fa-solid fa-check htu-tick"></i>
+                    </div>
+                    <h5 class="htu-title">Enter Weather &amp; Date-Time</h5>
+                    <p class="htu-desc">Fill in temperature, humidity, visibility, wind speed, pressure, and your planned travel date and hour.</p>
+                    <div class="htu-icon-row">
+                        <i class="fa-solid fa-cloud-sun"></i>
+                        <i class="fa-solid fa-clock"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 3 -->
+            <div class="col-lg-3 col-md-6">
+                <div class="htu-card" data-aos="fade-up" data-delay="200">
+                    <div class="htu-step-num">03</div>
+                    <div class="htu-tick-wrap">
+                        <i class="fa-solid fa-check htu-tick"></i>
+                    </div>
+                    <h5 class="htu-title">Click Predict Severity</h5>
+                    <p class="htu-desc">Hit the <strong>Predict Severity</strong> button and let the XGBoost model analyse your inputs instantly.</p>
+                    <div class="htu-icon-row">
+                        <i class="fa-solid fa-bolt"></i>
+                        <i class="fa-solid fa-robot"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 4 -->
+            <div class="col-lg-3 col-md-6">
+                <div class="htu-card" data-aos="fade-up" data-delay="300">
+                    <div class="htu-step-num">04</div>
+                    <div class="htu-tick-wrap">
+                        <i class="fa-solid fa-check htu-tick"></i>
+                    </div>
+                    <h5 class="htu-title">View Results &amp; Recommendations</h5>
+                    <p class="htu-desc">Review your predicted risk level, safety recommendations, and download a full PDF report.</p>
+                    <div class="htu-icon-row">
+                        <i class="fa-solid fa-shield-halved"></i>
+                        <i class="fa-solid fa-file-pdf"></i>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- connector arrows (desktop only) -->
+        <div class="htu-connector d-none d-lg-flex">
+            <div class="htu-line"></div>
+            <i class="fa-solid fa-chevron-right htu-arrow"></i>
+            <div class="htu-line"></div>
+            <i class="fa-solid fa-chevron-right htu-arrow"></i>
+            <div class="htu-line"></div>
+            <i class="fa-solid fa-chevron-right htu-arrow"></i>
+            <div class="htu-line"></div>
+        </div>
+
+    </div>
+</section>
+
+<!-- Disclaimer -->
+<section class="section-padding-sm">
+    <div class="container">
+        <div class="disclaimer-card">
+            <i class="fa-solid fa-triangle-exclamation me-3 text-warning"></i>
+            <div>
+                <strong>Disclaimer:</strong> Predictions are generated using historical accident data and machine
+                learning techniques. Results are intended for informational purposes only and should not replace
+                official traffic advisories or real-time road safety information.
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="site-footer">
+    <!-- Top glow line -->
+    <div class="footer-glow-line"></div>
+
+    <div class="container">
+
+        <!-- Brand headline -->
+        <div class="footer-brand-row text-center">
+            <div class="footer-shield-wrap">
+                <i class="fa-solid fa-shield-halved footer-shield-icon"></i>
+            </div>
+            <h2 class="footer-brand-title">Safe<span class="footer-brand-accent">Route</span>X AI</h2>
+            <p class="footer-brand-sub">AI-Powered Road Safety Prediction System</p>
+        </div>
+
+        <!-- Divider with glow -->
+        <div class="footer-sep"></div>
+
+        <!-- Four info cards -->
+        <div class="row g-4 justify-content-center mb-2">
+
+            <!-- Developed By -->
+            <div class="col-sm-6 col-lg-3">
+                <div class="footer-info-card">
+                    <div class="footer-card-icon-wrap">
+                        <i class="fa-solid fa-users"></i>
+                    </div>
+                    <div class="footer-card-label">Developed By</div>
+                    <div class="footer-card-main">B.Tech Final Year<br>Project Team</div>
+                    <div class="footer-card-sub">Department: Computer Science &amp;<br>Engineering (AI &amp; ML)</div>
+                </div>
+            </div>
+
+            <!-- Institution -->
+            <div class="col-sm-6 col-lg-3">
+                <div class="footer-info-card">
+                    <div class="footer-card-icon-wrap">
+                        <i class="fa-solid fa-building-columns"></i>
+                    </div>
+                    <div class="footer-card-label">Institution</div>
+                    <div class="footer-card-main">Bonam Venkata Chalamayya<br>Engineering College</div>
+                    <div class="footer-card-sub">Odalarevu, Andhra Pradesh</div>
+                </div>
+            </div>
+
+            <!-- Technologies -->
+            <div class="col-sm-6 col-lg-3">
+                <div class="footer-info-card">
+                    <div class="footer-card-icon-wrap">
+                        <i class="fa-solid fa-microchip"></i>
+                    </div>
+                    <div class="footer-card-label">Technologies Used</div>
+                    <div class="footer-tech-grid">
+                        <span class="footer-tech-chip">Python</span>
+                        <span class="footer-tech-chip">Flask</span>
+                        <span class="footer-tech-chip">XGBoost</span>
+                        <span class="footer-tech-chip">DBSCAN</span>
+                        <span class="footer-tech-chip">Scikit-Learn</span>
+                        <span class="footer-tech-chip">Bootstrap 5</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Model Stats -->
+            <div class="col-sm-6 col-lg-3">
+                <div class="footer-info-card">
+                    <div class="footer-card-icon-wrap">
+                        <i class="fa-solid fa-chart-line"></i>
+                    </div>
+                    <div class="footer-card-label">Model Performance</div>
+                    <div class="footer-stat-row">
+                        <div class="footer-stat">
+                            <div class="footer-stat-val">87.88%</div>
+                            <div class="footer-stat-lbl">Accuracy</div>
+                        </div>
+                        <div class="footer-stat-divider"></div>
+                        <div class="footer-stat">
+                            <div class="footer-stat-val">24</div>
+                            <div class="footer-stat-lbl">Features</div>
+                        </div>
+                        <div class="footer-stat-divider"></div>
+                        <div class="footer-stat">
+                            <div class="footer-stat-val">1.1M+</div>
+                            <div class="footer-stat-lbl">Records</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom bar -->
+        <div class="footer-bottom-bar">
+            <div class="footer-bottom-left">
+                <i class="fa-solid fa-lock-open me-2"></i>Open for Academic Use
+            </div>
+            <div class="footer-bottom-center">
+                &copy; 2026 SafeRouteX AI. All Rights Reserved.
+            </div>
+            <div class="footer-bottom-right">
+                <i class="fa-solid fa-location-dot me-1"></i>Odalarevu, AP, India
+            </div>
+        </div>
+
+    </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="/static/script.js"></script>
+</body>
+</html>
