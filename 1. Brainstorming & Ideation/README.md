@@ -12,4 +12,4 @@ The goal of this project is to predict whether rainfall will occur based on weat
 - To organize the project in a structured GitHub repository
 
 ## Why this project?
-Rain prediction helps in agriculture, planning, and weather awareness.
+Rain prediction helps in agriculture, travel planning, and disaster preparedness. This project demonstrates how ML can solve real-world forecasting problems.
